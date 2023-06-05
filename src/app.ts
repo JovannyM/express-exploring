@@ -18,7 +18,7 @@ export class App {
 		@inject(TYPES.UserController) private readonly userController: UserController,
 		@inject(TYPES.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
 	) {
-		this.port = 8080;
+		this.port = 8000;
 		this.app = express();
 	}
 
