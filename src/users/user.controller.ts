@@ -1,14 +1,18 @@
 import { BaseController } from '../common/base.controller';
-import { LoggerService } from '../logger/logger.service';
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../errors/http.error';
+import { LoggerService } from '../logger/logger.interface';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../types';
+import { UserController } from './user.controller.interface';
 
-export class UserController extends BaseController {
-    private readonly _logger: LoggerService;
+import 'reflect-metadata';
 
-    constructor(logger: LoggerService) {
-        super(logger);
-        this._logger = logger;
+@injectable()
+export class UserControllerImplementation extends BaseController implements UserController {
+
+    constructor(@inject(TYPES.LoggerService) private readonly loggerService: LoggerService) {
+        super(loggerService);
         this.bindRoutes([
             {
                 method: 'post',
@@ -23,13 +27,13 @@ export class UserController extends BaseController {
         ])
     }
 
-    private login(req: Request, res: Response, next: NextFunction) {
-        this._logger.log('Login');
+    public login(req: Request, res: Response, next: NextFunction) {
+        this.loggerService.log('Login');
         res.send('Login success');
     }
 
-    private register(req: Request, res: Response, next: NextFunction) {
-        this._logger.log('Registration');
+    public register(req: Request, res: Response, next: NextFunction) {
+        this.loggerService.log('Registration');
         // res.send('Registration success');
         next(new HttpError(402, 'VASYA YAY'));
     }
