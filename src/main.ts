@@ -10,15 +10,18 @@ import { UserController } from './users/user.controller';
 import { UserControllerImplementation } from './users/user.controller.implementation';
 import { UserService } from './users/user.service';
 import { UserServiceImplementation } from './users/user.service.implementation';
+import { ConfigService } from './config/config.service';
+import { ConfigServiceImplementation } from './config/config.service.implementation';
 
 import Bind = interfaces.Bind;
 
 const appModule = new ContainerModule((bind: Bind) => {
-	bind<LoggerService>(TYPES.LoggerService).to(LoggerServiceImplementation);
-	bind<ExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilterImplementation);
-	bind<UserController>(TYPES.UserController).to(UserControllerImplementation);
-	bind<UserService>(TYPES.UserService).to(UserServiceImplementation);
-	bind<App>(TYPES.Application).to(App);
+	bind<LoggerService>(TYPES.LoggerService).to(LoggerServiceImplementation).inSingletonScope();
+	bind<ConfigService>(TYPES.ConfigService).to(ConfigServiceImplementation).inSingletonScope();
+	bind<UserController>(TYPES.UserController).to(UserControllerImplementation).inSingletonScope();
+	bind<ExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilterImplementation).inSingletonScope();
+	bind<UserService>(TYPES.UserService).to(UserServiceImplementation).inSingletonScope();
+	bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 
 export interface BootstrapReturnType {

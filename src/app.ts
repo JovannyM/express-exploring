@@ -8,7 +8,7 @@ import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
 import { UserController } from './users/user.controller';
-
+import { ConfigService } from './config/config.service';
 import 'reflect-metadata';
 
 @injectable()
@@ -21,6 +21,7 @@ export class App {
 		@inject(TYPES.LoggerService) private readonly loggerService: LoggerService,
 		@inject(TYPES.UserController) private readonly userController: UserController,
 		@inject(TYPES.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
+		@inject(TYPES.ConfigService) private readonly configService: ConfigService,
 	) {
 		this.port = 8000;
 		this.app = express();
