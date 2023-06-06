@@ -5,6 +5,7 @@ import { BaseController } from '../common/base.controller';
 import { LoggerService } from '../logger/logger.service';
 import { TYPES } from '../types';
 import { HttpError } from '../errors/http.error';
+import { ValidateMiddleware } from '../common/validate.middleware';
 
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserController } from './user.controller';
@@ -29,6 +30,7 @@ export class UserControllerImplementation extends BaseController implements User
 				method: 'post',
 				path: '/registration',
 				function: this.register,
+				middlewares: [new ValidateMiddleware(UserRegisterDto)],
 			},
 		]);
 	}
