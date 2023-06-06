@@ -1,9 +1,12 @@
-import { BaseController } from '../common/base.controller';
 import { NextFunction, Request, Response } from 'express';
+import { inject, injectable } from 'inversify';
+
+import { BaseController } from '../common/base.controller';
 import { HttpError } from '../errors/http.error';
 import { LoggerService } from '../logger/logger.interface';
-import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
+
+import { UserLoginDto } from './dto/user-login.dto';
 import { UserController } from './user.controller.interface';
 
 import 'reflect-metadata';
@@ -26,7 +29,7 @@ export class UserControllerImplementation extends BaseController implements User
 		]);
 	}
 
-	public login(req: Request, res: Response, next: NextFunction) {
+	public login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
 		this.loggerService.log('Login');
 		res.send('Login success');
 	}

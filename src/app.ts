@@ -1,7 +1,9 @@
-import express, { Express } from 'express';
 import { Server } from 'http';
-import { LoggerService } from './logger/logger.interface';
+
+import express, { Express } from 'express';
 import { inject, injectable } from 'inversify';
+
+import { LoggerService } from './logger/logger.interface';
 import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
 import 'reflect-metadata';

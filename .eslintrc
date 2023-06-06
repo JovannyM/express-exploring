@@ -2,7 +2,8 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "extends": [
         "eslint:recommended",
@@ -11,6 +12,10 @@
         "plugin:prettier/recommended"
     ],
     "rules": {
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
         "@typescript-eslint/ban-types": ["off"],
         "@typescript-eslint/no-unused-vars": ["off"],
         "prettier/prettier": [
@@ -23,6 +28,21 @@
                 "printWidth": 100,
                 "endOfLine": "auto"
             }
-        ]
+        ],
+        "import/order": [
+            "error",
+            {
+                "newlines-between": "always",
+                "groups": ["builtin", "external", "parent", "sibling", "index"],
+                "pathGroups": [
+                    {
+                        "pattern": "src/**",
+                        "group": "parent",
+                        "position": "after"
+                    }
+                ]
+            }
+        ],
+        "import/newline-after-import": "error"
     }
 }
