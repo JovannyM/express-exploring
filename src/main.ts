@@ -12,6 +12,7 @@ import { UserService } from './users/user.service';
 import { UserServiceImplementation } from './users/user.service.implementation';
 import { ConfigService } from './config/config.service';
 import { ConfigServiceImplementation } from './config/config.service.implementation';
+import { PrismaService } from './storage/prisma.service';
 
 import Bind = interfaces.Bind;
 
@@ -21,6 +22,7 @@ const appModule = new ContainerModule((bind: Bind) => {
 	bind<UserController>(TYPES.UserController).to(UserControllerImplementation).inSingletonScope();
 	bind<ExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilterImplementation).inSingletonScope();
 	bind<UserService>(TYPES.UserService).to(UserServiceImplementation).inSingletonScope();
+	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 

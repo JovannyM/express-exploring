@@ -8,11 +8,13 @@
     "build": "tsc && node ./dist/main.js",
     "start": "nodemon",
     "lint": "eslint ./src/** --fix",
+    "generate": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jovannii",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^4.15.0",
     "@types/bcryptjs": "^2.4.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -36,6 +38,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
+    "prisma": "^4.15.0",
     "ts-node": "^10.9.1"
   }
 }

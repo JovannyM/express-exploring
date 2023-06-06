@@ -9,6 +9,8 @@ import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
 import { UserController } from './users/user.controller';
 import { ConfigService } from './config/config.service';
+import { PrismaService } from './storage/prisma.service';
+
 import 'reflect-metadata';
 
 @injectable()
@@ -22,6 +24,7 @@ export class App {
 		@inject(TYPES.UserController) private readonly userController: UserController,
 		@inject(TYPES.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
 		@inject(TYPES.ConfigService) private readonly configService: ConfigService,
+		@inject(TYPES.PrismaService) private readonly prismaService: PrismaService,
 	) {
 		this.port = 8000;
 		this.app = express();
@@ -31,6 +34,7 @@ export class App {
 		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionFilters();
+		await this.prismaService.connect();
 		this.server = this.app.listen(this.port, () => {
 			this.loggerService.log(`Server started on http://localhost:${this.port}`);
 		});
