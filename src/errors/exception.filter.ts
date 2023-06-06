@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 
-import { LoggerService } from '../logger/logger.interface';
+import { LoggerService } from '../logger/logger.service';
 import { ExceptionFilter } from '../interfaces/exceptionFilter';
 import { TYPES } from '../types';
 

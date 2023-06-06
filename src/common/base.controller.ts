@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { injectable } from 'inversify';
 
 import { ControllerRoute } from '../interfaces/route';
-import { LoggerService } from '../logger/logger.interface';
+import { LoggerService } from '../logger/logger.service';
 
 import 'reflect-metadata';
 

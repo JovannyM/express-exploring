@@ -4,10 +4,10 @@ import express, { Express } from 'express';
 import { inject, injectable } from 'inversify';
 import { json } from 'body-parser';
 
-import { LoggerService } from './logger/logger.interface';
+import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
-import { UserController } from './users/user.controller.interface';
+import { UserController } from './users/user.controller';
 
 import 'reflect-metadata';
 
