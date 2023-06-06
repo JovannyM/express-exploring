@@ -2,12 +2,14 @@ import { Server } from 'http';
 
 import express, { Express } from 'express';
 import { inject, injectable } from 'inversify';
+import { json } from 'body-parser';
 
 import { LoggerService } from './logger/logger.interface';
 import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
-import 'reflect-metadata';
 import { UserController } from './users/user.controller.interface';
+
+import 'reflect-metadata';
 
 @injectable()
 export class App {
@@ -25,6 +27,7 @@ export class App {
 	}
 
 	public async init() {
+		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionFilters();
 		this.server = this.app.listen(this.port, () => {
@@ -34,6 +37,10 @@ export class App {
 
 	private useRoutes() {
 		this.app.use('/users', this.userController.router);
+	}
+
+	private useMiddleware() {
+		this.app.use(json());
 	}
 
 	private useExceptionFilters() {

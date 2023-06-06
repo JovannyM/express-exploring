@@ -8,7 +8,7 @@ import { TYPES } from '../types';
 
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserController } from './user.controller.interface';
-
+import { UserRegisterDto } from './dto/user-register.dto';
 import 'reflect-metadata';
 
 @injectable()
@@ -30,11 +30,12 @@ export class UserControllerImplementation extends BaseController implements User
 	}
 
 	public login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
-		this.loggerService.log('Login');
+		this.loggerService.log(`Login success with ${req.body}`);
+		console.log(req.body);
 		res.send('Login success');
 	}
 
-	public register(req: Request, res: Response, next: NextFunction) {
+	public register(req: Request<{}, {}, UserRegisterDto>, res: Response, next: NextFunction) {
 		this.loggerService.log('Registration');
 		// res.send('Registration success');
 		next(new HttpError(402, 'VASYA YAY'));
