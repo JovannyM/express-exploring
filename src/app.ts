@@ -7,7 +7,7 @@ import { json } from 'body-parser';
 import { LoggerService } from './logger/logger.service';
 import { TYPES } from './types';
 import { ExceptionFilter } from './interfaces/exceptionFilter';
-import { UserController } from './users/user.controller';
+import { UserController } from './users/controller/user.controller';
 import { ConfigService } from './config/config.service';
 import { PrismaService } from './storage/prisma.service';
 
@@ -41,7 +41,7 @@ export class App {
 	}
 
 	private useRoutes() {
-		this.app.use('/users', this.userController.router);
+		this.app.use('', this.userController.router);
 	}
 
 	private useMiddleware() {
