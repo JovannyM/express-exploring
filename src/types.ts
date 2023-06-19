@@ -7,4 +7,9 @@ export const TYPES = {
 	ConfigService: Symbol.for('ConfigService'),
 	PrismaService: Symbol.for('PrismaService'),
 	UserRepository: Symbol.for('UserRepository'),
+	AWSController: Symbol.for('AWSController'),
+	AWSService: Symbol.for('AWSService'),
+	S3Service: Symbol.for('S3Service'),
+	DynamoDBService: Symbol.for('DynamoDBService'),
+	SQSService: Symbol.for('SQSService'),
 };
