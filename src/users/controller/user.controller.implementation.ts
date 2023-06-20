@@ -48,29 +48,29 @@ export class UserControllerImplementation extends BaseController implements User
 	}
 
 	public async get({ user }: Request, res: Response, next: NextFunction) {
-		const existedUser = await this.userService.get(user);
-		if (existedUser) {
-			return res.send({ name: existedUser.name, id: existedUser.id });
-		}
+		// const existedUser = await this.userService.get(user);
+		// if (existedUser) {
+		// 	return res.send({ name: existedUser.name, id: existedUser.id });
+		// }
 		res.status(404).send('User not found');
 	}
 
 	public async info({ user }: Request, res: Response, next: NextFunction) {
-		const isUserExists = await this.userService.validate({ email: user, password: '' });
-		if (isUserExists) {
-			return res.send('Info success');
-		}
+		// const isUserExists = await this.userService.validate({ email: user, password: '' });
+		// if (isUserExists) {
+		// 	return res.send('Info success');
+		// }
 		res.status(401).send('User not found');
 	}
 
 	public async login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
-		const isUserExists = await this.userService.validate(req.body);
-		if (isUserExists) {
-			this.loggerService.log(`Login success with ${req.body}`);
-			const secret = this.configService.get('SECRET');
-			const jwt = await this.signJWT(req.body.email, secret);
-			return res.send({ token: jwt });
-		}
+		// const isUserExists = await this.userService.validate(req.body);
+		// if (isUserExists) {
+		// 	this.loggerService.log(`Login success with ${req.body}`);
+		// 	const secret = this.configService.get('SECRET');
+		// 	const jwt = await this.signJWT(req.body.email, secret);
+		// 	return res.send({ token: jwt });
+		// }
 		const error_text = 'User not found';
 		this.loggerService.error(error_text);
 		console.log(req.body);
@@ -82,12 +82,12 @@ export class UserControllerImplementation extends BaseController implements User
 		res: Response,
 		next: NextFunction,
 	) {
-		const result = await this.userService.create(body);
-		if (result) {
-			const text = `Registration success: { email: ${result.email}; id: ${result.id} }`;
-			this.loggerService.log(text);
-			return res.send(text);
-		}
+		// const result = await this.userService.create(body);
+		// if (result) {
+		// 	const text = `Registration success: { email: ${result.email}; id: ${result.id} }`;
+		// 	this.loggerService.log(text);
+		// 	return res.send(text);
+		// }
 		const error_test = 'User already exists';
 		this.loggerService.error(error_test);
 		return next(new HttpError(422, error_test));

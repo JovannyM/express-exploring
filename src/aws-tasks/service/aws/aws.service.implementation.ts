@@ -59,9 +59,4 @@ export class AWSServiceImplementation implements AWSService {
 	public async getTaskStatus(taskId: string) {
 		return await this.dynamoDBService.getTaskStatus(taskId);
 	}
-
-	//TODO: To service worker
-	public async getMessagesFromQueue() {
-		await this.sqsService.getMessagesFromQueue();
-	}
 }

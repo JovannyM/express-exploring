@@ -31,12 +31,6 @@ export class AWSControllerImplementation extends BaseController implements AWSCo
 				path: '/status',
 				function: this.getTaskStatus,
 			},
-			//TODO: To service worker
-			{
-				method: 'get',
-				path: '/messages',
-				function: this.getMessagesFromQueue,
-			},
 		]);
 	}
 
@@ -56,12 +50,6 @@ export class AWSControllerImplementation extends BaseController implements AWSCo
 			return;
 		}
 		res.status(400).send('File not found');
-	}
-
-	//TODO: To service worker
-	async getMessagesFromQueue(req: Request, res: Response, next: NextFunction): Promise<void> {
-		await this.awsService.getMessagesFromQueue();
-		res.send('getMessagesFromQueue');
 	}
 
 	async getTaskStatus(req: Request, res: Response, next: NextFunction): Promise<void> {

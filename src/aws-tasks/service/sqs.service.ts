@@ -1,11 +1,5 @@
 import { inject, injectable } from 'inversify';
-import {
-	CreateQueueCommand,
-	DeleteMessageCommand,
-	ReceiveMessageCommand,
-	SendMessageCommand,
-	SQSClient,
-} from '@aws-sdk/client-sqs';
+import { CreateQueueCommand, SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
 
 import { TYPES } from '../../types';
 import { ConfigService } from '../../config/config.service';
@@ -62,29 +56,6 @@ export class SQSService {
 		}
 	}
 
-	public async getMessagesFromQueue() {
-		const command = new ReceiveMessageCommand({
-			QueueUrl: this.queueURL,
-			MaxNumberOfMessages: 10,
-		});
-		try {
-			const messages = await this.sqsClient.send(command);
-			if (messages && messages.Messages && messages.Messages.length > 0) {
-				const isMessageDeleted = await this.removeMessageFromQueue(
-					messages.Messages[0].ReceiptHandle!,
-				);
-				if (isMessageDeleted) {
-					this.loggerService.log(successfulRequest('get messages from queue'), messages);
-					return;
-				}
-			}
-			this.loggerService.log(successfulRequest('get messages from queue'));
-			this.loggerService.log('Messages not found');
-		} catch (e) {
-			this.loggerService.error(unsuccessfulRequest('get messages from queue'), e);
-		}
-	}
-
 	public async createSQSQueue(): Promise<string | undefined> {
 		const command = new CreateQueueCommand({
 			QueueName: this.queueName,
@@ -99,21 +70,6 @@ export class SQSService {
 		} catch (e) {
 			this.loggerService.error(unsuccessfulRequest('create SQS queue'), e);
 			return undefined;
-		}
-	}
-
-	private async removeMessageFromQueue(receiptHandle: string): Promise<boolean> {
-		const command = new DeleteMessageCommand({
-			QueueUrl: this.queueURL,
-			ReceiptHandle: receiptHandle,
-		});
-		try {
-			await this.sqsClient.send(command);
-			this.loggerService.log(successfulRequest('remove message from queue'));
-			return true;
-		} catch (e) {
-			this.loggerService.error('remove message from queue', e);
-			return false;
 		}
 	}
 

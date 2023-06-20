@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { UserModel } from '@prisma/client';
+// import { UserModel } from '@prisma/client';
 
 import { TYPES } from '../../types';
 import { ConfigService } from '../../config/config.service';
@@ -18,26 +18,26 @@ export class UserServiceImplementation implements UserService {
 	) {}
 
 	public async validate({ email, password }: UserLoginDto): Promise<boolean> {
-		const existedUser = await this.userRepository.find(email);
-		if (existedUser) {
-			const newUser = new User(existedUser.email, existedUser.name, existedUser.password);
-			return newUser.comparePassword(password);
-		}
+		// const existedUser = await this.userRepository.find(email);
+		// if (existedUser) {
+		// 	const newUser = new User(existedUser.email, existedUser.name, existedUser.password);
+		// 	return newUser.comparePassword(password);
+		// }
 		return false;
 	}
 
-	public async create({ email, password, name }: UserRegisterDto): Promise<UserModel | null> {
-		const newUser = new User(email, name);
-		const salt = Number(this.configService.get('HASH_SALT'));
-		await newUser.setPassword(password, salt);
-		const existedUser = await this.userRepository.find(email);
-		if (existedUser) {
-			return null;
-		}
-		return await this.userRepository.create(newUser);
-	}
+	// public async create({ email, password, name }: UserRegisterDto): Promise<UserModel | null> {
+	// 	const newUser = new User(email, name);
+	// 	const salt = Number(this.configService.get('HASH_SALT'));
+	// 	await newUser.setPassword(password, salt);
+	// 	const existedUser = await this.userRepository.find(email);
+	// 	if (existedUser) {
+	// 		return null;
+	// 	}
+	// 	return await this.userRepository.create(newUser);
+	// }
 
-	public async get(email: string): Promise<UserModel | null> {
-		return this.userRepository.find(email);
-	}
+	// public async get(email: string): Promise<UserModel | null> {
+	// 	return this.userRepository.find(email);
+	// }
 }

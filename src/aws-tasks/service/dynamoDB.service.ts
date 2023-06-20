@@ -122,13 +122,5 @@ export class DynamoDBService {
 			},
 			region: this.region,
 		});
-		// return new DynamoDBClient({
-		// 	apiVersion,
-		// 	credentials: {
-		// 		accessKeyId,
-		// 		secretAccessKey,
-		// 	},
-		// 	region: this.region,
-		// });
 	}
 }
