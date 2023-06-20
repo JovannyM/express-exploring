@@ -35,10 +35,10 @@ export class AWSControllerImplementation extends BaseController implements AWSCo
 	}
 
 	async uploadFile({ files }: Request, res: Response, next: NextFunction) {
-		if (files?.[Object.keys(files)[0]]) {
-			const obj = files?.[Object.keys(files)[0]] as UploadedFile;
+		const file = files?.[Object.keys(files)[0]];
+		if (file) {
 			const awsRegion = this.configService.get(AWS_REGION);
-			const taskId = await this.awsService.uploadFile(obj);
+			const taskId = await this.awsService.uploadFile(file as UploadedFile);
 			if (taskId) {
 				res.send({
 					TaskID: taskId,
