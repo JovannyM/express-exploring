@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc && node ./dist/main.js",
-    "prod": "tsc",
+    "push": "docker build --no-cache . -t jm/server && docker tag jm/server jovannym/server && docker push jovannym/server",
     "start": "nodemon",
     "lint": "eslint ./src/** --fix",
     "generate": "prisma generate",

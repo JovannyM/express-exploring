@@ -25,6 +25,7 @@ import { LoggerService } from '../../logger/logger.service';
 import { successfulRequest, unsuccessfulRequest } from '../../logger/logger.service.implementation';
 
 import 'reflect-metadata';
+import path from 'path';
 
 @injectable()
 export class S3Service {
@@ -42,17 +43,17 @@ export class S3Service {
 	}
 
 	public async putFile(file: UploadedFile): Promise<string | undefined> {
-		const key = uuidv4();
+		const fileKey = this.getKeyWithFileExtension(file.name);
 		const putObjectCommand = new PutObjectCommand({
 			Bucket: this.bucketName,
 			Body: file.data,
-			Key: key,
+			Key: fileKey,
 			ACL: 'public-read-write',
 		});
 		try {
 			await this.s3Client.send(putObjectCommand);
 			this.loggerService.log(successfulRequest('put file'));
-			return key;
+			return fileKey;
 		} catch (e) {
 			this.loggerService.error(unsuccessfulRequest('put file'), e);
 			return undefined;
@@ -102,6 +103,12 @@ export class S3Service {
 			this.loggerService.error(unsuccessfulRequest('bucket list'), e);
 			return undefined;
 		}
+	}
+
+	private getKeyWithFileExtension(fileName: string): string {
+		const key = uuidv4();
+		const fileExt = path.extname(fileName);
+		return key + fileExt;
 	}
 
 	private configureS3Client(): S3Client {
